@@ -5,13 +5,13 @@ from xgboost import XGBClassifier
 from sklearn.metrics import classification_report
 import numpy as np
 
-# Fixer la graine pour la reproductibilité
+# Fix the seed for reproducibility
 np.random.seed(42)
 
-# Nombre de lignes du dataset
+# Number of rows in dataset
 n_samples = 30000
 
-# Créer un DataFrame avec des données fictives
+# Creating a DataFrame 
 data = pd.DataFrame({
     'income': np.random.normal(50000, 15000, n_samples),      
     'age': np.random.randint(18, 70, n_samples),               
@@ -21,24 +21,26 @@ data = pd.DataFrame({
     'default': np.random.choice([0, 1], size=n_samples)        
 })
 
-# Afficher les premières lignes du DataFrame
+# Display first lines
 print(data.head())
 
-# Séparer les caractéristiques (X) et la cible (y)
-X = data.drop('default', axis=1)  # Caractéristiques
-y = data['default']  # Cible
+# Separate features (X) and target (y)
+X = data.drop('default', axis=1)  # Features
+y = data['default']  # Label
 
-# Diviser les données en train/test
+# Split data in train/test
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-# Créer et entraîner le modèle XGBoost
-model = XGBClassifier(learning_rate=0.4, random_state=42)
+# Create and train the XGBoost model
+model = XGBClassifier(learning_rate=0.4, 
+                      random_state=42)
+
 model.fit(X_train, y_train)
 
-# Prédiction et évaluation
+# Prediction
 y_pred = model.predict(X_test)
 
-# Afficher le rapport de classification
+# Display classification report
 print(classification_report(y_test, y_pred))
 
 
